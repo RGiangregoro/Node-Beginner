@@ -3,14 +3,16 @@ const express = require('express'),
 
 const hostname = 'localhost';
 const port = 3000;
-
 const app = express();
-
+const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const dishRouter = require('./routes/dishrouter');
 
 app.use(morgan('dev'));
-
 app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.json());
+
+app.use('/dishes', dishRouter);
 
 app.use((req, res, next) => {
   res.statusCode = 200;
